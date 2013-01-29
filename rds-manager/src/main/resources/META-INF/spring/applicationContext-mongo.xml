@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:mongo="http://www.springframework.org/schema/data/mongo"
+	xmlns:c="http://www.springframework.org/schema/c"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/data/mongo http://www.springframework.org/schema/data/mongo/spring-mongo.xsd">
+   
+	<!-- mongo db configuration -->
+	<mongo:db-factory dbname="${mongo.database}" host="${mongo.host}" port="${mongo.port}"
+		password="${mongo.password}" username="${mongo.username}" id="mongoDbFactory" />
+	
+	<!-- mongo template to access db -->	
+	<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate" c:mongoDbFactory-ref="mongoDbFactory" />
+	
+</beans>
