@@ -84,42 +84,47 @@ public class MainService {
 	 */
 	@Scheduled(fixedDelay = 5000)
 	public void displayOnRDS() {
-		if (isServiceEnabled()) { //if service is enabled
-			LOGGER.debug("Service is enabled");
-			if (isPauseTimeElapsed()) {
-				LOGGER.debug("Pause elasped");
-				
-				if (idleTime) { //we switch the mode
-					LOGGER.debug("Switching to title mode");
-					BroadcastableTitle broadcastableTitle = getCurrentBroadcastableTitle();
-					if (broadcastableTitle != null) { //if there is a title to display
-						LOGGER.debug("Title to display : " + broadcastableTitle);
-						rdsDisplayManagerService.displayTitle(broadcastableTitle);
+		try  {
+			if (isServiceEnabled()) { //if service is enabled
+				LOGGER.debug("Service is enabled");
+				if (isPauseTimeElapsed()) {
+					LOGGER.debug("Pause elasped");
+					
+					if (idleTime) { //we switch the mode
+						LOGGER.debug("Switching to title mode");
+						BroadcastableTitle broadcastableTitle = getCurrentBroadcastableTitle();
+						if (broadcastableTitle != null) { //if there is a title to display
+							LOGGER.debug("Title to display : " + broadcastableTitle);
+							rdsDisplayManagerService.displayTitle(broadcastableTitle);
+							
+						} else { //no title to display
+							LOGGER.debug("Broadcastable title is null - display idle text");
+							rdsDisplayManagerService.displayIdleText();
+						}
 						
-					} else { //no title to display
-						LOGGER.debug("Broadcastable title is null - display idle text");
+						idleTime = false; 
+						
+					} else { //idle mode
+						LOGGER.debug("Switching to idle mode");
 						rdsDisplayManagerService.displayIdleText();
+						idleTime = true;
 					}
 					
-					idleTime = false; 
-					
-				} else { //idle mode
-					LOGGER.debug("Switching to idle mode");
-					rdsDisplayManagerService.displayIdleText();
-					idleTime = true;
-				}
+					//save last action date
+					lastActionDate = Calendar.getInstance();
+					LOGGER.debug("Display process ended");
+				} else 
+					LOGGER.debug("Pause not elasped - wait | idle mode : " + idleTime);
 				
-				//save last action date
-				lastActionDate = Calendar.getInstance();
+			} else if (!idleTime) { //if service is disabled and not in idle time 
+				LOGGER.debug("Service disabled but not in idle - set in idle");
+				rdsDisplayManagerService.displayIdleText();
+				idleTime = true;
 			} else 
-				LOGGER.debug("Pause not elasped - wait | idle mode : " + idleTime);
-			
-		} else if (!idleTime) { //if service is disabled and not in idle time 
-			LOGGER.debug("Service disabled but not in idle - set in idle");
-			rdsDisplayManagerService.displayIdleText();
-			idleTime = true;
-		} else 
-			LOGGER.debug("Service disabled");
+				LOGGER.debug("Service disabled");
+		} catch (Exception e) {
+			LOGGER.error("Error global", e);
+		}
 	}
 	
 	/**

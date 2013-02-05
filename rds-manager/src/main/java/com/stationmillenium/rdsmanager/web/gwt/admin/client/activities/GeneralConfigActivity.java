@@ -175,6 +175,7 @@ public class GeneralConfigActivity extends AbstractActivity implements Presenter
 	@Override
 	public void refreshHistoryList() {
 		LOGGER.fine("Refresh the history list");
+		clientFactory.getGeneralConfigView().setMessageLabelTextAndStyle(clientFactory.getGeneralConfigConstants().getHistoryRefreshing(), MessageLabelStyle.DEFAULT);
 		clientFactory.getAdminService().getLastDisplays(new AsyncCallback<List<RDSDisplayGWT>>() {
 
 			@Override

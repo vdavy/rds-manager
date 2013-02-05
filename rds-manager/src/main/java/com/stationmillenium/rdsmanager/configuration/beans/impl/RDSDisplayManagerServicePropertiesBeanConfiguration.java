@@ -50,6 +50,30 @@ public class RDSDisplayManagerServicePropertiesBeanConfiguration extends Abstrac
 	@Size(min = 1, max = 1)
 	private @Value("${rdsDisplayManager.rtSeparator}") String rtSeparator;
 	
+	@NotNull
+	@Size(min = 1, max = 5)
+	private @Value("${rdsDisplayManager.psCommandReturn}") String psCommandReturn;
+	
+	@NotNull
+	@Size(min = 1, max = 5)
+	private @Value("${rdsDisplayManager.rtCommandReturn}") String rtCommandReturn;
+	
+	@NotNull
+	@Size(min = 1, max = 50)
+	private @Value("${rdsDisplayManager.virtualModeReturnText}") String virtualModeReturnText;
+	
+	@NotNull
+	@Size(min = 1)
+	private @Value("${rdsDisplayManager.commandTerminaison}") String commandTerminaison;
+	
+	@NotNull
+	@Size(min = 1)
+	private @Value("${rdsDisplayManager.psInitCommand}") String psInitCommand;
+	
+	@NotNull
+	@Size(min = 1)
+	private @Value("${rdsDisplayManager.rtInitCommand}") String rtInitCommand;
+		
 	//instances
 	private int maxLengthInt;
 	
@@ -62,6 +86,12 @@ public class RDSDisplayManagerServicePropertiesBeanConfiguration extends Abstrac
 		propertiesBean.setRtIdle(rtIdle);
 		propertiesBean.setMaxLength(maxLengthInt);
 		propertiesBean.setRtSeparator(rtSeparator);
+		propertiesBean.setPsCommandReturn(psCommandReturn);
+		propertiesBean.setRtCommandReturn(rtCommandReturn);
+		propertiesBean.setVirtualModeReturnText(virtualModeReturnText);
+		propertiesBean.setCommandTerminaison(commandTerminaison);
+		propertiesBean.setPsInitCommand(psInitCommand);
+		propertiesBean.setRtInitCommand(rtInitCommand);
 		return propertiesBean;
 	}
 	

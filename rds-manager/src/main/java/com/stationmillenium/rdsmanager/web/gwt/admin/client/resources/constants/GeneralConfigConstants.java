@@ -70,4 +70,7 @@ public interface GeneralConfigConstants extends Constants {
 	@DefaultStringValue("Historique mis à jour")
 	String getHistoryRefresh();
 	
+	@DefaultStringValue("Mise  à jour en cours...")
+	String getHistoryRefreshing();
+	
 }

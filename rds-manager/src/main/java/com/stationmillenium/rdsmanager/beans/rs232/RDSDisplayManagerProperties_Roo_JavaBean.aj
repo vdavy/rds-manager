@@ -55,4 +55,52 @@ privileged aspect RDSDisplayManagerProperties_Roo_JavaBean {
         this.rtSeparator = rtSeparator;
     }
     
+    public String RDSDisplayManagerProperties.getPsCommandReturn() {
+        return this.psCommandReturn;
+    }
+    
+    public void RDSDisplayManagerProperties.setPsCommandReturn(String psCommandReturn) {
+        this.psCommandReturn = psCommandReturn;
+    }
+    
+    public String RDSDisplayManagerProperties.getRtCommandReturn() {
+        return this.rtCommandReturn;
+    }
+    
+    public void RDSDisplayManagerProperties.setRtCommandReturn(String rtCommandReturn) {
+        this.rtCommandReturn = rtCommandReturn;
+    }
+    
+    public String RDSDisplayManagerProperties.getVirtualModeReturnText() {
+        return this.virtualModeReturnText;
+    }
+    
+    public void RDSDisplayManagerProperties.setVirtualModeReturnText(String virtualModeReturnText) {
+        this.virtualModeReturnText = virtualModeReturnText;
+    }
+    
+    public String RDSDisplayManagerProperties.getCommandTerminaison() {
+        return this.commandTerminaison;
+    }
+    
+    public void RDSDisplayManagerProperties.setCommandTerminaison(String commandTerminaison) {
+        this.commandTerminaison = commandTerminaison;
+    }
+    
+    public String RDSDisplayManagerProperties.getPsInitCommand() {
+        return this.psInitCommand;
+    }
+    
+    public void RDSDisplayManagerProperties.setPsInitCommand(String psInitCommand) {
+        this.psInitCommand = psInitCommand;
+    }
+    
+    public String RDSDisplayManagerProperties.getRtInitCommand() {
+        return this.rtInitCommand;
+    }
+    
+    public void RDSDisplayManagerProperties.setRtInitCommand(String rtInitCommand) {
+        this.rtInitCommand = rtInitCommand;
+    }
+    
 }

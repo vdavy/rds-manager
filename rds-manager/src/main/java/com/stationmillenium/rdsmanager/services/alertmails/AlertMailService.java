@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.mail.MailException;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 /**
@@ -88,6 +89,7 @@ public class AlertMailService {
 	 * Send a COM port error alert
 	 * @param e the exception
 	 */
+	@Async
 	public void sendCOMPortErrorAlert(Exception e) {
 		LOGGER.warn("Send COM port error alert");
 		sendAlert(comPortErrorAlertTemplate, e);
@@ -96,6 +98,7 @@ public class AlertMailService {
 	/**
 	 * Send a RDS coder error alert
 	 */
+	 @Async
 	public void sendRDSCoderErrorAlert(Exception e) {
 		LOGGER.warn("Send RDS coder error alert");
 		sendAlert(rdsCoderErrorAlertTemplate, e);

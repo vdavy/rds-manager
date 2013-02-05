@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.stationmillenium.rdsmanager.beans.currenttitle.CurrentTitleGrabberProperties;
 import com.stationmillenium.rdsmanager.beans.mainconfig.MainConfigProperties;
 import com.stationmillenium.rdsmanager.beans.rs232.RDSDisplayManagerProperties;
+import com.stationmillenium.rdsmanager.beans.rs232.RS232Properties;
 
 /**
  * Test property loading and validation 
@@ -34,6 +35,10 @@ public class TestPropertiesChecker {
 	@Autowired
 	private MainConfigProperties mainConfigProperties;
 	
+	//the rs232 wire properties
+	@Autowired
+	private RS232Properties  rs232Properties;
+	
 	/**
 	 * Test current title grabber properties
 	 */
@@ -56,6 +61,14 @@ public class TestPropertiesChecker {
 	@Test
 	public void testMainConfigProperties() {
 		LOGGER.debug(mainConfigProperties.toString());
+	}
+	
+	/**
+	 * Test RS232 properties
+	 */
+	@Test
+	public void testRS232Properties() {
+		LOGGER.debug(rs232Properties.toString());
 	}
 	
 }

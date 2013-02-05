@@ -54,7 +54,11 @@ public class AdminServiceImpl extends RemoteServiceServlet implements AdminServi
 	@Override
 	public RDSDisplayGWT getCurrentTitle() {
 		RDSDisplay rdsDisplay = dbRepository.getLastInserted();
-		RDSDisplayGWT rdsDisplayGWT = mapper.map(rdsDisplay, RDSDisplayGWT.class);
+		RDSDisplayGWT rdsDisplayGWT = null;
+		if (rdsDisplay != null)
+			rdsDisplayGWT = mapper.map(rdsDisplay, RDSDisplayGWT.class);
+		else 
+			rdsDisplayGWT = new RDSDisplayGWT();		
 		return rdsDisplayGWT;
 	}
 
