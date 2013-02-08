@@ -224,6 +224,7 @@ public class RDSDisplayManagerService implements ApplicationContextAware {
 			psCommandReturn = processCommandReturnAndVirtualMode(CommandType.PS, psCommandReturn);
 		} catch (IOException | RS232RDSCoderException e) {
 			LOGGER.error("Error while sending PS init command - stop context", e);
+			alertMailService.sendCOMPortErrorAlert(e);
 			((AbstractApplicationContext) context).close(); //unload context (stop starting)
 		}
 		
@@ -234,6 +235,7 @@ public class RDSDisplayManagerService implements ApplicationContextAware {
 			rtCommandReturn = processCommandReturnAndVirtualMode(CommandType.RADIOTEXT, rtCommandReturn);
 		} catch (IOException | RS232RDSCoderException e) {
 			LOGGER.error("Error while sending RT init command - stop context", e);
+			alertMailService.sendCOMPortErrorAlert(e);
 			((AbstractApplicationContext) context).close(); //unload context (stop starting)
 		}
 		

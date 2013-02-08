@@ -181,8 +181,13 @@ public class RS232WireService  implements ApplicationContextAware {
 				if (bufferedReader.ready()) { //if buffer ready : read
 					LOGGER.debug("Receive buffer is ready !");
 					returnLine = bufferedReader.readLine();
-					bufferRead = true;
-					break; 
+					if ((returnLine != null) && (returnLine.length() > 0)) { //line has something to read
+						bufferRead = true;
+						break;
+					} else { //read line is empty - try again
+						LOGGER.debug("Read empty line - try next time...");
+						i--; //cancel this try
+					}
 				} else { //wait next time
 					LOGGER.debug("Receive buffer not ready - wait...");
 					try {
