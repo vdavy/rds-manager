@@ -86,11 +86,7 @@ public class RDSDisplayManagerService implements ApplicationContextAware {
 	 * @return the command as string
 	 */
 	private String prepareRTTitleCommand(BroadcastableTitle titleToDisplay) {
-		String artist = titleToDisplay.getArtist();
-		artist = artist.charAt(0) + artist.substring(1).toLowerCase(); //lowercase but 1st letter uppercase
-		String title = titleToDisplay.getTitle();
-		title =  title.charAt(0) +  title.substring(1).toLowerCase(); //lowercase but 1st letter uppercase
-		String rtText = artist + " " + rdsDisplayManagerProperties.getRtSeparator() + " " + title;
+		String rtText = titleToDisplay.getArtist() + " " + rdsDisplayManagerProperties.getRtSeparator() + " " + titleToDisplay.getTitle();
 		if (rtText.length() > rdsDisplayManagerProperties.getMaxLength())
 			rtText = rtText.substring(0, rdsDisplayManagerProperties.getMaxLength() - 1);
 		String rtCommandToSend = rdsDisplayManagerProperties.getRtCommandPrefix() + rtText + rdsDisplayManagerProperties.getCommandTerminaison();

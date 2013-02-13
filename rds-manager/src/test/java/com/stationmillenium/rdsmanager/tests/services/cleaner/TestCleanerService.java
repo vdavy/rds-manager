@@ -38,8 +38,8 @@ public class TestCleanerService {
 	@Before
 	public void init() {
 		currentSong = new CurrentSong();
-		currentSong.setArtist("Alïcià Kéys Feat0. Nicki Mînaj");
-		currentSong.setTitle("Girl On Fire [Infèrnô1 Version]");
+		currentSong.setArtist("Alïcià Kéys Feat0. Nicki-Mînaj");
+		currentSong.setTitle("Girl On Fire-[Infèrnô1 Version]");
 	}
 	
 	/**

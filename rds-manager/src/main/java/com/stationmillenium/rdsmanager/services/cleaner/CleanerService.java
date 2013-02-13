@@ -83,10 +83,11 @@ public class CleanerService {
 		if (valueToClean != null) {
 			
 			LOGGER.debug("Value to clean : " + valueToClean);
-			String cleanedValue = Normalizer.normalize(valueToClean, Normalizer.Form.NFD).replaceAll("[^\\p{Alpha}\\p{Digit}\\p{Blank}\\-]", "");
+			String cleanedValue = Normalizer.normalize(valueToClean, Normalizer.Form.NFD).replaceAll("[^\\p{Alnum}\\p{Blank}\\-]", "");
 			cleanedValue = cleanedValue.replaceAll("[\\p{Blank}][\\p{Blank}]+", " ");
 			cleanedValue = cleanedValue.trim();
 			cleanedValue = cleanedValue.toUpperCase();
+			cleanedValue = cleanedValue.charAt(0) + cleanedValue.substring(1).toLowerCase(); //lowercase but 1st letter uppercase
 			LOGGER.debug("Cleaned value : " + cleanedValue);
 			return cleanedValue;
 			
