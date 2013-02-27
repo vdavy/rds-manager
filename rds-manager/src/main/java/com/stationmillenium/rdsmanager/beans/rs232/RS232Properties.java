@@ -22,5 +22,7 @@ public class RS232Properties implements PropertyBeanInterface {
 	private boolean virtualMode;
 	private long waitingTime;
 	private int waitingTries;
+	private String initCommand;
+	private String initCommandReturn;
 	
 }

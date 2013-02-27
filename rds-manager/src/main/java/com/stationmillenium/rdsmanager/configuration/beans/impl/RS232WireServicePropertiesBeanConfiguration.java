@@ -45,12 +45,19 @@ public class RS232WireServicePropertiesBeanConfiguration extends AbstractPropert
 	@Pattern(regexp = "^[\\p{Digit}]+$")
 	private @Value("${rs232Wire.waitingTries}") String waitingTries;
 	
+	@NotNull
+	@Size(min = 1)
+	private @Value("${rs232Wire.initCommand}") String initCommand;
+	
+	@NotNull
+	@Size(min = 1)
+	private @Value("${rs232Wire.initCommandReturn}") String initCommandReturn;
+	
 	//instances
 	private int speedInt;
 	private boolean virtualModeBool;
 	private long waitingTimeLong;
 	private int waitingTriesInt;
-	
 	
 	@Override
 	protected RS232Properties buildBean() {
@@ -60,6 +67,8 @@ public class RS232WireServicePropertiesBeanConfiguration extends AbstractPropert
 		propertiesBean.setVirtualMode(virtualModeBool);
 		propertiesBean.setWaitingTime(waitingTimeLong);
 		propertiesBean.setWaitingTries(waitingTriesInt);
+		propertiesBean.setInitCommand(initCommand);
+		propertiesBean.setInitCommandReturn(initCommandReturn);
 		return propertiesBean;
 	}
 	

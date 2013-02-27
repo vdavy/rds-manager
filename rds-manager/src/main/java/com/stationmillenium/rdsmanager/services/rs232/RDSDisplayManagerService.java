@@ -37,6 +37,7 @@ public class RDSDisplayManagerService implements ApplicationContextAware {
 	 *
 	 */
 	private enum CommandType {
+		INIT,
 		PS,
 		RADIOTEXT;
 	}
@@ -183,7 +184,20 @@ public class RDSDisplayManagerService implements ApplicationContextAware {
 	 */
 	private String processCommandReturnAndVirtualMode(CommandType commandType, String returnedText) throws RS232RDSCoderException {
 		if (!rs232Config.isVirtualMode()) {
-			String expectedText = (commandType == CommandType.PS) ? rdsDisplayManagerProperties.getPsCommandReturn() : rdsDisplayManagerProperties.getRtCommandReturn();
+			String expectedText = null;
+			switch (commandType) {
+			case INIT:
+				expectedText = rs232Config.getInitCommandReturn();
+				break;
+				
+			case PS:
+				expectedText = rdsDisplayManagerProperties.getPsCommandReturn();
+				break;
+
+			case RADIOTEXT:
+				expectedText = rdsDisplayManagerProperties.getRtCommandReturn();
+				break;
+			}
 			if (expectedText.equals(returnedText))
 				return returnedText;
 			else {
@@ -208,11 +222,24 @@ public class RDSDisplayManagerService implements ApplicationContextAware {
 	 */
 	@PostConstruct
 	public void initRDS() {
+		String initCommand = rs232Config.getInitCommand();
 		String psCommand = rdsDisplayManagerProperties.getPsCommandPrefix() + rdsDisplayManagerProperties.getPsInitCommand() + rdsDisplayManagerProperties.getCommandTerminaison();
 		String rtCommand = rdsDisplayManagerProperties.getRtCommandPrefix() + rdsDisplayManagerProperties.getRtInitCommand() + rdsDisplayManagerProperties.getCommandTerminaison();
+		LOGGER.debug("Command to send for RDS init : " + initCommand);
 		LOGGER.debug("Command to send for PS : " + psCommand);
 		LOGGER.debug("Command to send for RT : " + rtCommand);
 		
+		//send PS command
+		String initCommandReturn = null;
+		try {
+			initCommandReturn = rs232WireService.sendCommand(initCommand);
+			initCommandReturn = processCommandReturnAndVirtualMode(CommandType.INIT, initCommandReturn);
+		} catch (IOException | RS232RDSCoderException e) {
+			LOGGER.error("Error while sending RDS port init command - stop context", e);
+			alertMailService.sendCOMPortErrorAlert(e);
+			((AbstractApplicationContext) context).close(); //unload context (stop starting)
+		}
+				
 		//send PS command
 		String psCommandReturn = null;
 		try {
