@@ -16,17 +16,17 @@
 		
 		<!-- spring part -->
 		<spring.version>3.2.1.RELEASE</spring.version>
-		<aspectj.version>1.7.0</aspectj.version>
-		<slf4j.version>1.6.4</slf4j.version>
+		<aspectj.version>1.7.2</aspectj.version>
+		<slf4j.version>1.7.2</slf4j.version>
 		<hibernate.validator.version>4.3.1.Final</hibernate.validator.version>
-		<spring-data-mongodb.version>1.1.1.RELEASE</spring-data-mongodb.version>
+		<spring-data-mongodb.version>1.2.0.RELEASE</spring-data-mongodb.version>
 
 		<!-- third parts -->
 		<log4j.version>1.2.17</log4j.version>
 		<validation-api.version>1.0.0.GA</validation-api.version>
 		<jstl.version>1.2</jstl.version>
 		<joda-time.version>2.0</joda-time.version>
-		<dozer.version>5.3.2</dozer.version>
+		<dozer.version>5.4.0</dozer.version>
 		<gwt.version>2.5.0</gwt.version>
 
 		<!-- common parts -->
