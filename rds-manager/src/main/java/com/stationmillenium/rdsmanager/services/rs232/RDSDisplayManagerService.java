@@ -222,7 +222,7 @@ public class RDSDisplayManagerService implements ApplicationContextAware {
 	 */
 	@PostConstruct
 	public void initRDS() {
-		String initCommand = rs232Config.getInitCommand();
+		String initCommand = rs232Config.getInitCommand() + rdsDisplayManagerProperties.getCommandTerminaison();
 		String psCommand = rdsDisplayManagerProperties.getPsCommandPrefix() + rdsDisplayManagerProperties.getPsInitCommand() + rdsDisplayManagerProperties.getCommandTerminaison();
 		String rtCommand = rdsDisplayManagerProperties.getRtCommandPrefix() + rdsDisplayManagerProperties.getRtInitCommand() + rdsDisplayManagerProperties.getCommandTerminaison();
 		LOGGER.debug("Command to send for RDS init : " + initCommand);
