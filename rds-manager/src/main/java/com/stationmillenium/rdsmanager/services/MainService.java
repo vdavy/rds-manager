@@ -57,6 +57,9 @@ public class MainService {
 	//date of the last action
 	private Calendar lastActionDate;
 	
+	//last broadcasted title
+	BroadcastableTitle broadcastableTitle;
+	
 	/**
 	 * Set the service enabled
 	 * @param serviceEnabled
@@ -87,12 +90,12 @@ public class MainService {
 		try  {
 			if (isServiceEnabled()) { //if service is enabled
 				LOGGER.debug("Service is enabled");
-				if (isPauseTimeElapsed()) {
+				if (isPauseTimeElapsed()) { //pause time elapsed - changing display and mode
 					LOGGER.debug("Pause elasped");
 					
 					if (idleTime) { //we switch the mode
 						LOGGER.debug("Switching to title mode");
-						BroadcastableTitle broadcastableTitle = getCurrentBroadcastableTitle();
+						broadcastableTitle = getCurrentBroadcastableTitle();
 						if (broadcastableTitle != null) { //if there is a title to display
 							LOGGER.debug("Title to display : " + broadcastableTitle);
 							rdsDisplayManagerService.displayTitle(broadcastableTitle);
@@ -113,6 +116,16 @@ public class MainService {
 					//save last action date
 					lastActionDate = Calendar.getInstance();
 					LOGGER.debug("Display process ended");
+					
+				} else if (!idleTime) { //we are not in idle time - check if title needs update 
+					LOGGER.debug("Check if current displayed title needs update");
+					BroadcastableTitle titleFromServer = getCurrentBroadcastableTitle();
+					if ((titleFromServer != null) && (broadcastableTitle != null) && (!broadcastableTitle.equals(titleFromServer))) { //if titles are not null and not the same
+						LOGGER.debug("Titles are different : update display - Old title : " + broadcastableTitle + " - New title : " + titleFromServer);
+						broadcastableTitle = titleFromServer;
+						rdsDisplayManagerService.displayTitle(broadcastableTitle);
+					} 
+					
 				} else 
 					LOGGER.debug("Pause not elasped - wait | idle mode : " + idleTime);
 				
