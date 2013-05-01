@@ -24,6 +24,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.stationmillenium.rdsmanager.beans.currenttitle.CurrentTitleGrabberProperties;
 import com.stationmillenium.rdsmanager.schema.currentsong.CurrentSong;
+import com.stationmillenium.rdsmanager.services.alertmails.AlertMailService;
 
 /**
  * Grabber to get the current title to display
@@ -40,6 +41,10 @@ public class CurrentTitleGrabberService {
 	@Autowired
 	private CurrentTitleGrabberProperties properties;
 
+	//alert service
+	@Autowired
+	private AlertMailService alertMailService;
+	
 	//xml marshallers
 	@Autowired
 	@Qualifier("oxmCurrentSong")
@@ -62,9 +67,12 @@ public class CurrentTitleGrabberService {
 	 */
 	public CurrentSong getCurrentTitle() {
 		String xml = getXMLAsString();
-		CurrentSong currentTitle = unmarshalllData(xml);
-		LOGGER.debug("XML unmarshalled : " + currentTitle);
-		return currentTitle;
+		if (xml != null) { //if not null
+			CurrentSong currentTitle = unmarshalllData(xml);
+			LOGGER.debug("XML unmarshalled : " + currentTitle);
+			return currentTitle;
+		} else
+			return null;
 	}
 
 	/**
@@ -79,6 +87,7 @@ public class CurrentTitleGrabberService {
 			return returnXML;
 		} catch (XmlMappingException e) {
 			LOGGER.warn("Error while unmarshalling normal data", e);
+			alertMailService.sendWebserviceCommunicationErrorAlert(e);
 			return null;
 		}
 	}
@@ -87,14 +96,20 @@ public class CurrentTitleGrabberService {
 	 * @return the string
 	 */
 	private String getXMLAsString() {
-		//credentials
-		SimpleClientHttpRequestFactory simpleClientHttpRequestFactory = prepareCredentials();
-
-		//make query
-		RestTemplate template = new RestTemplate(simpleClientHttpRequestFactory);
-		String result = template.getForObject(properties.getUrl(), String.class);
-		LOGGER.debug("Gathered XML : " + result);
-		return result;
+		try {
+			//credentials
+			SimpleClientHttpRequestFactory simpleClientHttpRequestFactory = prepareCredentials();
+	
+			//make query
+			RestTemplate template = new RestTemplate(simpleClientHttpRequestFactory);
+			String result = template.getForObject(properties.getUrl(), String.class);
+			LOGGER.debug("Gathered XML : " + result);
+			return result;
+		} catch (Exception e) {
+			LOGGER.warn("Error while getting current title", e);
+			alertMailService.sendWebserviceCommunicationErrorAlert(e);
+			return null;
+		}
 	}
 
 	/**

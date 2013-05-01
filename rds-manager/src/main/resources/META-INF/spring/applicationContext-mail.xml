@@ -16,7 +16,7 @@
 	</bean>
 
 	<!-- mail templates -->
-	<!-- fm templates -->
+	<!-- COM port template -->
 	<bean id="comPortErrorAlertTemplate" class="org.springframework.mail.SimpleMailMessage">
 		<property name="from" value="${mailConfiguration.from}" />
 		<property name="to" value="${mailConfiguration.to}" />
@@ -25,12 +25,21 @@
 		
 	</bean>
 	
-	<!-- shouctast templates -->
+	<!-- RDS communication template -->
 	<bean id="rdsCoderErrorAlertTemplate" class="org.springframework.mail.SimpleMailMessage">
 		<property name="from" value="${mailConfiguration.from}" />
 		<property name="to" value="${mailConfiguration.to}" />
 		<property name="subject" value="${mailConfiguration.rdsCommunication.subject}" />
 		<property name="text" value="${mailConfiguration.rdsCommunication.text}" />
+	</bean>
+	
+	
+	<!-- Webservice communication template -->
+	<bean id="webserviceErrorAlertTemplate" class="org.springframework.mail.SimpleMailMessage">
+		<property name="from" value="${mailConfiguration.from}" />
+		<property name="to" value="${mailConfiguration.to}" />
+		<property name="subject" value="${mailConfiguration.webserviceCommunication.subject}" />
+		<property name="text" value="${mailConfiguration.webserviceCommunication.text}" />
 	</bean>
 	
 </beans>

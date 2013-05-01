@@ -14,6 +14,7 @@ import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.stationmillenium.rdsmanager.web.gwt.admin.client.clientfactory.ClientFactory;
+import com.stationmillenium.rdsmanager.web.gwt.admin.client.utils.callbacks.AjaxLoaderAsyncCallback;
 import com.stationmillenium.rdsmanager.web.gwt.admin.client.view.GeneralConfigView;
 import com.stationmillenium.rdsmanager.web.gwt.admin.client.view.GeneralConfigView.Presenter;
 import com.stationmillenium.rdsmanager.web.gwt.admin.client.view.impl.AbstractMessageView.MessageLabelStyle;
@@ -79,17 +80,17 @@ public class GeneralConfigActivity extends AbstractActivity implements Presenter
 		LOGGER.fine("Change main service status : " + value);
 		clientFactory.getGeneralConfigView().setMessageLabelTextAndStyle(clientFactory.getGeneralConfigConstants().getServiceUpdate(), MessageLabelStyle.DEFAULT);
 		clientFactory.getGeneralConfigView().setMainServiceCheckboxActivation(false);
-		clientFactory.getAdminService().setRDSManagerStatus(value, new AsyncCallback<Void>() {
+		clientFactory.getAdminService().setRDSManagerStatus(value, new AjaxLoaderAsyncCallback<Void>(clientFactory) {
 			
 			@Override
-			public void onSuccess(Void result) {
+			public void onCustomSuccess(Void result) {
 				clientFactory.getGeneralConfigView().setMessageLabelTextAndStyle(clientFactory.getGeneralConfigConstants().getServiceStatusChangeOK(), MessageLabelStyle.GREEN);
 				clientFactory.getGeneralConfigView().setMainServiceCheckboxActivation(true);				
 				getServiceStatus();
 			}
 			
 			@Override
-			public void onFailure(Throwable caught) {
+			public void onCustomFailure(Throwable caught) {
 				LOGGER.log(Level.WARNING, "Error while changing main service status", caught);
 				clientFactory.getGeneralConfigView().setMessageLabelTextAndStyle(clientFactory.getGeneralConfigConstants().getServiceStatusChangeError(), MessageLabelStyle.RED);
 			}
@@ -102,10 +103,10 @@ public class GeneralConfigActivity extends AbstractActivity implements Presenter
 	private void getServiceStatus() {
 		LOGGER.fine("Get the service status");
 		clientFactory.getGeneralConfigView().setMainServiceCheckboxActivation(false);
-		clientFactory.getAdminService().getRDSManagerStatus(new AsyncCallback<Boolean>() {
+		clientFactory.getAdminService().getRDSManagerStatus(new AjaxLoaderAsyncCallback<Boolean>(clientFactory) {
 			
 			@Override
-			public void onSuccess(Boolean result) {
+			public void onCustomSuccess(Boolean result) {
 				if (result != null) { 
 					LOGGER.fine("Received status :" + result);
 					
@@ -124,7 +125,7 @@ public class GeneralConfigActivity extends AbstractActivity implements Presenter
 			}
 			
 			@Override
-			public void onFailure(Throwable caught) {
+			public void onCustomFailure(Throwable caught) {
 				LOGGER.log(Level.WARNING, "Error while getting the service status", caught);
 				clientFactory.getGeneralConfigView().setMessageLabelTextAndStyle(clientFactory.getGeneralConfigConstants().getServicesStatusError(), MessageLabelStyle.RED);
 			}
@@ -176,17 +177,17 @@ public class GeneralConfigActivity extends AbstractActivity implements Presenter
 	public void refreshHistoryList() {
 		LOGGER.fine("Refresh the history list");
 		clientFactory.getGeneralConfigView().setMessageLabelTextAndStyle(clientFactory.getGeneralConfigConstants().getHistoryRefreshing(), MessageLabelStyle.DEFAULT);
-		clientFactory.getAdminService().getLastDisplays(new AsyncCallback<List<RDSDisplayGWT>>() {
+		clientFactory.getAdminService().getLastDisplays(new AjaxLoaderAsyncCallback<List<RDSDisplayGWT>>(clientFactory) {
 
 			@Override
-			public void onSuccess(List<RDSDisplayGWT> result) {
+			public void onCustomSuccess(List<RDSDisplayGWT> result) {
 				LOGGER.fine("Current title : " + result);
 				clientFactory.getGeneralConfigView().setRDSDisplayList(result);
 				clientFactory.getGeneralConfigView().setMessageLabelTextAndStyle(clientFactory.getGeneralConfigConstants().getHistoryRefresh(), MessageLabelStyle.GREEN);
 			}
 			
 			@Override
-			public void onFailure(Throwable caught) {
+			public void onCustomFailure(Throwable caught) {
 				LOGGER.log(Level.WARNING, "Error while getting the history list", caught);
 				clientFactory.getGeneralConfigView().setRDSDisplayList(new ArrayList<RDSDisplayGWT>());
 				clientFactory.getGeneralConfigView().setMessageLabelTextAndStyle(clientFactory.getGeneralConfigConstants().getHistoryRefreshError(), MessageLabelStyle.RED);

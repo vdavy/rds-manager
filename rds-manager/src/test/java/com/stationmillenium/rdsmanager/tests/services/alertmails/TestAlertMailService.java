@@ -31,12 +31,27 @@ public class TestAlertMailService {
 		}
 	}
 	
+	/**
+	 * Test RDS return alert
+	 */
 	@Test
 	public void testRDSCoderErrorAlert() {
 		try {
 			throw new Exception("test RDS coder error");
 		} catch(Exception e) {
 			service.sendRDSCoderErrorAlert(e);
+		}
+	}
+	
+	/**
+	 * Test webservice communication alert
+	 */
+	@Test
+	public void testWebserviceCommunicationErrorAlert() {
+		try {
+			throw new Exception("test webservice communication error error");
+		} catch(Exception e) {
+			service.sendWebserviceCommunicationErrorAlert(e);
 		}
 	}
 	

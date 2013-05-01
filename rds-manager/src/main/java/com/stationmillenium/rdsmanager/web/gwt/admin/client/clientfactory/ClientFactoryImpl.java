@@ -12,6 +12,7 @@ import com.stationmillenium.rdsmanager.web.gwt.admin.client.resources.constants.
 import com.stationmillenium.rdsmanager.web.gwt.admin.client.resources.messages.GeneralConfigMessages;
 import com.stationmillenium.rdsmanager.web.gwt.admin.client.server.AdminService;
 import com.stationmillenium.rdsmanager.web.gwt.admin.client.server.AdminServiceAsync;
+import com.stationmillenium.rdsmanager.web.gwt.admin.client.utils.widgets.AjaxLoaderWidget;
 import com.stationmillenium.rdsmanager.web.gwt.admin.client.view.GeneralConfigView;
 import com.stationmillenium.rdsmanager.web.gwt.admin.client.view.impl.GeneralConfigViewImpl;
 
@@ -22,6 +23,7 @@ import com.stationmillenium.rdsmanager.web.gwt.admin.client.view.impl.GeneralCon
  */
 public class ClientFactoryImpl implements ClientFactory {
 
+	private AjaxLoaderWidget ajaxLoaderWidget = new AjaxLoaderWidget();
 	private EventBus eventBus = new SimpleEventBus();
 	private PlaceController placeController = new PlaceController(eventBus);
 	private AdminBundle adminBundle = GWT.create(AdminBundle.class);
@@ -63,6 +65,11 @@ public class ClientFactoryImpl implements ClientFactory {
 	@Override
 	public GeneralConfigConstants getGeneralConfigConstants() {
 		return generalConfigConstants;
+	}
+	
+	@Override
+	public AjaxLoaderWidget getAjaxLoaderWidget() {
+		return ajaxLoaderWidget;
 	}
 
 }

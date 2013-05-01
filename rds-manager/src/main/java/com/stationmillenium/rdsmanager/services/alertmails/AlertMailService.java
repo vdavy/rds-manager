@@ -35,6 +35,7 @@ public class AlertMailService {
 	//mail templates
 	@Autowired @Qualifier("comPortErrorAlertTemplate") private SimpleMailMessage comPortErrorAlertTemplate;
 	@Autowired @Qualifier("rdsCoderErrorAlertTemplate") private SimpleMailMessage rdsCoderErrorAlertTemplate;
+	@Autowired @Qualifier("webserviceErrorAlertTemplate") private SimpleMailMessage webserviceErrorAlertTemplate;
 	
 	/**
 	 * Send the alert
@@ -99,6 +100,14 @@ public class AlertMailService {
 	public void sendRDSCoderErrorAlert(Exception e) {
 		LOGGER.warn("Send RDS coder error alert");
 		sendAlert(rdsCoderErrorAlertTemplate, e);
+	}
+	
+	/**
+	 * Send a webservice communication error alert
+	 */
+	public void sendWebserviceCommunicationErrorAlert(Exception e) {
+		LOGGER.warn("Send webservice communication error alert");
+		sendAlert(webserviceErrorAlertTemplate, e);
 	}
 	
 }

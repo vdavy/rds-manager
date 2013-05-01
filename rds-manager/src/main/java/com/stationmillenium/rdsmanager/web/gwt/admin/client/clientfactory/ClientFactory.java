@@ -9,6 +9,7 @@ import com.stationmillenium.rdsmanager.web.gwt.admin.client.resources.AdminBundl
 import com.stationmillenium.rdsmanager.web.gwt.admin.client.resources.constants.GeneralConfigConstants;
 import com.stationmillenium.rdsmanager.web.gwt.admin.client.resources.messages.GeneralConfigMessages;
 import com.stationmillenium.rdsmanager.web.gwt.admin.client.server.AdminServiceAsync;
+import com.stationmillenium.rdsmanager.web.gwt.admin.client.utils.widgets.AjaxLoaderWidget;
 import com.stationmillenium.rdsmanager.web.gwt.admin.client.view.GeneralConfigView;
 
 /**
@@ -24,4 +25,5 @@ public interface ClientFactory {
 	AdminServiceAsync getAdminService();
 	GeneralConfigConstants getGeneralConfigConstants();
 	GeneralConfigMessages getGeneralConfigMessages();
+	AjaxLoaderWidget getAjaxLoaderWidget();
 }
