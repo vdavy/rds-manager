@@ -22,5 +22,8 @@ public class CurrentTitleGrabberProperties implements PropertyBeanInterface {
 	private String password;
 	private String trustStorePath;
 	private String trustStorePassword;
+	private int connectionTimeout;
+	private int readTimeout;
+	private boolean sendMailOnTimeout;
 	
 }

@@ -47,4 +47,27 @@ privileged aspect CurrentTitleGrabberProperties_Roo_JavaBean {
         this.trustStorePassword = trustStorePassword;
     }
     
+    public int CurrentTitleGrabberProperties.getConnectionTimeout() {
+        return this.connectionTimeout;
+    }
+    
+    public void CurrentTitleGrabberProperties.setConnectionTimeout(int connectionTimeout) {
+        this.connectionTimeout = connectionTimeout;
+    }
+    
+    public int CurrentTitleGrabberProperties.getReadTimeout() {
+        return this.readTimeout;
+    }
+    
+    public void CurrentTitleGrabberProperties.setReadTimeout(int readTimeout) {
+        this.readTimeout = readTimeout;
+    }
+    
+    public boolean CurrentTitleGrabberProperties.isSendMailOnTimeout() {
+        return this.sendMailOnTimeout;
+    }
+    
+    public void CurrentTitleGrabberProperties.setSendMailOnTimeout(boolean sendMailOnTimeout) {
+        this.sendMailOnTimeout = sendMailOnTimeout;
+    }
 }

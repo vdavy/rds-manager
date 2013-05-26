@@ -27,7 +27,7 @@ import com.stationmillenium.rdsmanager.exceptions.utils.PropertyBeanException;
 @Configuration
 public class CurrentTitleGrabberServicePropertiesBeanConfiguration extends AbstractPropertiesBeanConfiguration<CurrentTitleGrabberProperties> {
 
-	//property list
+	//property list	
 	@NotNull
 	@Pattern(regexp = "^https://.+")
 	private @Value("${currentTitleGrabber.url}") String url;
@@ -35,11 +35,11 @@ public class CurrentTitleGrabberServicePropertiesBeanConfiguration extends Abstr
 	@NotNull
 	@Size(min = 3)
 	private @Value("${currentTitleGrabber.username}") String username;
-
+	
 	@NotNull
 	@Size(min = 3)
 	private @Value("${currentTitleGrabber.password}") String password;
-		
+	
 	@NotNull
 	@Size(min = 1)
 	private @Value("${currentTitleGrabber.trustStorePath}") String trustStorePath;
@@ -47,6 +47,23 @@ public class CurrentTitleGrabberServicePropertiesBeanConfiguration extends Abstr
 	@NotNull
 	@Size(min = 3)
 	private @Value("${currentTitleGrabber.trustStorePassword}") String trustStorePassword;
+
+	@NotNull
+	@Pattern(regexp = "^[\\p{Digit}]+$")
+	private @Value("${currentTitleGrabber.connectionTimeout}") String connectionTimeout;
+	
+	@NotNull
+	@Pattern(regexp = "^[\\p{Digit}]+$")
+	private @Value("${currentTitleGrabber.connectionTimeout}") String readTimeout;
+	
+	@NotNull
+	@Pattern(regexp = "^(true|false)$")
+	private @Value("${currentTitleGrabber.sendMailOnTimeout}") String sendMailOnTimeout;
+	
+	//local vars
+	private int connectionTimeoutInt;
+	private int readTimeoutInt;
+	private boolean sendMailOnTimeoutBool;
 	
 	@Override
 	protected CurrentTitleGrabberProperties buildBean() {
@@ -56,6 +73,9 @@ public class CurrentTitleGrabberServicePropertiesBeanConfiguration extends Abstr
 		propertiesBean.setPassword(password);
 		propertiesBean.setTrustStorePath(trustStorePath);
 		propertiesBean.setTrustStorePassword(trustStorePassword);
+		propertiesBean.setConnectionTimeout(connectionTimeoutInt);
+		propertiesBean.setReadTimeout(readTimeoutInt);
+		propertiesBean.setSendMailOnTimeout(sendMailOnTimeoutBool);
 		return propertiesBean;
 	}
 	
@@ -64,6 +84,21 @@ public class CurrentTitleGrabberServicePropertiesBeanConfiguration extends Abstr
 		File file = new File(trustStorePath);
 		if (!file.exists())
 			throw new PropertyBeanException("trustStorePath", new FileNotFoundException(trustStorePath));
+		
+		try { //convert connectionTimeout into number
+			connectionTimeoutInt = Integer.parseInt(connectionTimeout);
+		} catch(NumberFormatException e) {
+			throw new PropertyBeanException("connectionTimeout", e);
+		}
+		
+		try { //convert readTimeoutInt into number
+			readTimeoutInt = Integer.parseInt(readTimeout);
+		} catch(NumberFormatException e) {
+			throw new PropertyBeanException("readTimeout", e);
+		}
+		
+		//convert virtualMode into boolean
+		sendMailOnTimeoutBool = new Boolean(sendMailOnTimeout);
 	}
 	
 	/**

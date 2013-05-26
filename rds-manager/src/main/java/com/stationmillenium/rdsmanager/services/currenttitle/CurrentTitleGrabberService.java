@@ -6,6 +6,7 @@ package com.stationmillenium.rdsmanager.services.currenttitle;
 import java.io.IOException;
 import java.io.StringReader;
 import java.net.HttpURLConnection;
+import java.net.SocketTimeoutException;
 
 import javax.annotation.PostConstruct;
 import javax.xml.transform.stream.StreamSource;
@@ -20,6 +21,7 @@ import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.oxm.XmlMappingException;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import com.stationmillenium.rdsmanager.beans.currenttitle.CurrentTitleGrabberProperties;
@@ -99,15 +101,20 @@ public class CurrentTitleGrabberService {
 		try {
 			//credentials
 			SimpleClientHttpRequestFactory simpleClientHttpRequestFactory = prepareCredentials();
-	
+
 			//make query
 			RestTemplate template = new RestTemplate(simpleClientHttpRequestFactory);
 			String result = template.getForObject(properties.getUrl(), String.class);
 			LOGGER.debug("Gathered XML : " + result);
 			return result;
-		} catch (Exception e) {
-			LOGGER.warn("Error while getting current title", e);
-			alertMailService.sendWebserviceCommunicationErrorAlert(e);
+		
+		} catch (RestClientException e) {
+			LOGGER.warn("Error while getting current title", e);			
+			if (!(e.getCause() instanceof SocketTimeoutException)) //if not a timeout exception
+				alertMailService.sendWebserviceCommunicationErrorAlert(e);
+			else if (properties.isSendMailOnTimeout()) //send mail if enabled for timeout
+				alertMailService.sendWebserviceCommunicationErrorAlert(e);
+			
 			return null;
 		}
 	}
@@ -129,6 +136,11 @@ public class CurrentTitleGrabberService {
 				connection.setRequestProperty("Authorization", "Basic " + new String(encodedAuthorisation));
 			}
 		};
+		
+		//set timeouts
+		simpleClientHttpRequestFactory.setConnectTimeout(properties.getConnectionTimeout());
+		simpleClientHttpRequestFactory.setReadTimeout(properties.getReadTimeout());
+		
 		return simpleClientHttpRequestFactory;
 	}
 
