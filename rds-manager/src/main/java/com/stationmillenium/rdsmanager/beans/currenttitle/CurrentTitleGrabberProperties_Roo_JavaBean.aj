@@ -30,7 +30,7 @@ privileged aspect CurrentTitleGrabberProperties_Roo_JavaBean {
     public void CurrentTitleGrabberProperties.setPassword(String password) {
         this.password = password;
     }
- 
+    
     public String CurrentTitleGrabberProperties.getTrustStorePath() {
         return this.trustStorePath;
     }
@@ -70,4 +70,5 @@ privileged aspect CurrentTitleGrabberProperties_Roo_JavaBean {
     public void CurrentTitleGrabberProperties.setSendMailOnTimeout(boolean sendMailOnTimeout) {
         this.sendMailOnTimeout = sendMailOnTimeout;
     }
+    
 }

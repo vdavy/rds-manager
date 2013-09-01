@@ -46,13 +46,21 @@ privileged aspect RDSDisplayManagerProperties_Roo_JavaBean {
     public void RDSDisplayManagerProperties.setMaxLength(int maxLength) {
         this.maxLength = maxLength;
     }
-
+    
     public String RDSDisplayManagerProperties.getRtSeparator() {
         return this.rtSeparator;
     }
     
     public void RDSDisplayManagerProperties.setRtSeparator(String rtSeparator) {
         this.rtSeparator = rtSeparator;
+    }
+    
+    public String RDSDisplayManagerProperties.getPsSeparator() {
+        return this.psSeparator;
+    }
+    
+    public void RDSDisplayManagerProperties.setPsSeparator(String psSeparator) {
+        this.psSeparator = psSeparator;
     }
     
     public String RDSDisplayManagerProperties.getPsCommandReturn() {

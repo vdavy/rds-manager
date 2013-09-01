@@ -62,4 +62,5 @@ privileged aspect RS232Properties_Roo_JavaBean {
     public void RS232Properties.setInitCommandReturn(String initCommandReturn) {
         this.initCommandReturn = initCommandReturn;
     }
+    
 }

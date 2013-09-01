@@ -23,10 +23,12 @@ public class RDSDisplayManagerProperties implements PropertyBeanInterface {
 	private String rtIdle;
 	private int maxLength;
 	private String rtSeparator;
+	private String psSeparator;
 	private String psCommandReturn;
 	private String rtCommandReturn;
 	private String virtualModeReturnText;
 	private String commandTerminaison;
 	private String psInitCommand;
 	private String rtInitCommand;
+	
 }

@@ -100,7 +100,7 @@ public class RDSDisplayManagerService implements ApplicationContextAware {
 	 * @return the command as string
 	 */
 	private String preparePSTitleCommand(BroadcastableTitle titleToDisplay) {
-		String psText = titleToDisplay.getArtist() + " " + titleToDisplay.getTitle();
+		String psText = titleToDisplay.getArtist() + " " + rdsDisplayManagerProperties.getPsSeparator() +  " " + titleToDisplay.getTitle();
 		if (psText.length() > rdsDisplayManagerProperties.getMaxLength())
 			psText = psText.substring(0, rdsDisplayManagerProperties.getMaxLength() - 1);
 		String psCommandToSend = rdsDisplayManagerProperties.getPsCommandPrefix() + psText + rdsDisplayManagerProperties.getCommandTerminaison();

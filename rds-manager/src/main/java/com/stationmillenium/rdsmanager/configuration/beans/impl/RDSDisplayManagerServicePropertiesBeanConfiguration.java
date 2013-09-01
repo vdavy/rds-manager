@@ -51,6 +51,10 @@ public class RDSDisplayManagerServicePropertiesBeanConfiguration extends Abstrac
 	private @Value("${rdsDisplayManager.rtSeparator}") String rtSeparator;
 	
 	@NotNull
+	@Size(min = 1, max = 1)
+	private @Value("${rdsDisplayManager.psSeparator}") String psSeparator;
+	
+	@NotNull
 	@Size(min = 1, max = 5)
 	private @Value("${rdsDisplayManager.psCommandReturn}") String psCommandReturn;
 	
@@ -86,6 +90,7 @@ public class RDSDisplayManagerServicePropertiesBeanConfiguration extends Abstrac
 		propertiesBean.setRtIdle(rtIdle);
 		propertiesBean.setMaxLength(maxLengthInt);
 		propertiesBean.setRtSeparator(rtSeparator);
+		propertiesBean.setPsSeparator(psSeparator);
 		propertiesBean.setPsCommandReturn(psCommandReturn);
 		propertiesBean.setRtCommandReturn(rtCommandReturn);
 		propertiesBean.setVirtualModeReturnText(virtualModeReturnText);
