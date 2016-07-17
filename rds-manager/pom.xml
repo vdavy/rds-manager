@@ -41,6 +41,7 @@
 		<el-api.version>2.2</el-api.version>
 		<jsp-api.version>2.2</jsp-api.version>
 		<java.version>1.7</java.version>
+		<compiler.version>1.7</compiler.version>
         <!-- java 1.7 not supported by aspectj 
 			compiler 1.4 -->
 

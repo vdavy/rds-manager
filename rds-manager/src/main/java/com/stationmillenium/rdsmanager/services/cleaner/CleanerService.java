@@ -5,6 +5,7 @@ package com.stationmillenium.rdsmanager.services.cleaner;
 
 import java.text.Normalizer;
 
+import org.apache.commons.lang3.text.WordUtils;
 import org.dozer.Mapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -86,8 +87,7 @@ public class CleanerService {
 			String cleanedValue = Normalizer.normalize(valueToClean, Normalizer.Form.NFD).replaceAll("[^\\p{Alnum}\\p{Blank}\\-]", "");
 			cleanedValue = cleanedValue.replaceAll("[\\p{Blank}][\\p{Blank}]+", " ");
 			cleanedValue = cleanedValue.trim();
-			cleanedValue = cleanedValue.toUpperCase();
-			cleanedValue = cleanedValue.charAt(0) + cleanedValue.substring(1).toLowerCase(); //lowercase but 1st letter uppercase
+            cleanedValue = WordUtils.capitalizeFully(cleanedValue);
 			LOGGER.debug("Cleaned value : " + cleanedValue);
 			return cleanedValue;
 			
