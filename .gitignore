@@ -4,3 +4,7 @@
 *.jar
 *.war
 *.ear
+/.idea/
+/rds-manager/.idea/
+/rds-manager/rds-manager.iml
+/rds-manager/.settings/
