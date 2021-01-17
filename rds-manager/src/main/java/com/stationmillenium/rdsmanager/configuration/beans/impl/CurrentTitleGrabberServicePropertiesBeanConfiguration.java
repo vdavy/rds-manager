@@ -29,7 +29,7 @@ public class CurrentTitleGrabberServicePropertiesBeanConfiguration extends Abstr
 
 	//property list	
 	@NotNull
-	@Pattern(regexp = "^https://.+")
+//	@Pattern(regexp = "^https://.+")
 	private @Value("${currentTitleGrabber.url}") String url;
 	
 	@NotNull
